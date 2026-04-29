@@ -129,7 +129,7 @@ export default function App() {
         </div>
       </header>
 
-      <main className="flex-1 w-full p-4 sm:p-6 lg:p-8 flex flex-col items-center justify-center relative overflow-hidden">
+      <main className="flex-1 w-full p-4 sm:p-6 lg:p-8 flex flex-col items-center justify-center relative overflow-hidden min-h-0">
         {/* Background decorative elements */}
         <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-red-500/10 blur-[120px] rounded-full pointer-events-none" />
         <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-orange-500/10 blur-[120px] rounded-full pointer-events-none" />
@@ -142,35 +142,35 @@ export default function App() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 1.05 }}
               transition={{ duration: 0.3 }}
-              className={`w-full max-w-3xl backdrop-blur-xl border rounded-3xl p-8 sm:p-12 shadow-2xl relative z-10 transition-colors duration-300 ${isDarkMode ? 'bg-slate-800/50 border-white/10' : 'bg-white border-slate-200'}`}
+              className={`w-full max-w-3xl flex flex-col max-h-full backdrop-blur-xl border rounded-3xl p-6 sm:p-10 shadow-2xl relative z-10 transition-colors duration-300 ${isDarkMode ? 'bg-slate-800/50 border-white/10' : 'bg-white border-slate-200'}`}
             >
-              <div className="text-center mb-10">
-                <Users className="w-16 h-16 text-red-500 mx-auto mb-6" />
-                <h2 className={`text-3xl sm:text-4xl font-bold mb-4 tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Pendaftaran Peserta</h2>
-                <p className={`text-lg ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
+              <div className="shrink-0 text-center mb-6 sm:mb-8">
+                <Users className="w-12 h-12 sm:w-16 sm:h-16 text-red-500 mx-auto mb-4" />
+                <h2 className={`text-2xl sm:text-4xl font-bold mb-2 sm:mb-4 tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Pendaftaran Peserta</h2>
+                <p className={`text-sm sm:text-lg ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
                   Tambahkan tim atau peserta yang akan mengikuti kuis.
                 </p>
               </div>
 
-              <form onSubmit={handleAddGroup} className="flex gap-3 mb-10">
+              <form onSubmit={handleAddGroup} className="shrink-0 flex gap-2 sm:gap-3 mb-6 sm:mb-8">
                 <input
                   type="text"
                   value={newGroupName}
                   onChange={(e) => setNewGroupName(e.target.value)}
                   placeholder="Nama Grup/Peserta..."
-                  className={`flex-1 border rounded-xl px-5 py-4 text-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all ${isDarkMode ? 'bg-slate-900/50 border-white/10 text-white placeholder-slate-500' : 'bg-slate-100 border-slate-200 text-slate-900 placeholder-slate-400'}`}
+                  className={`flex-1 border rounded-xl px-4 sm:px-5 py-3 sm:py-4 text-base sm:text-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all ${isDarkMode ? 'bg-slate-900/50 border-white/10 text-white placeholder-slate-500' : 'bg-slate-100 border-slate-200 text-slate-900 placeholder-slate-400'}`}
                 />
                 <button
                   type="submit"
-                  className="bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 text-white px-8 py-4 rounded-xl font-semibold transition-all shadow-lg hover:shadow-red-500/25 active:scale-95 whitespace-nowrap"
+                  className="bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold transition-all shadow-lg hover:shadow-red-500/25 active:scale-95 whitespace-nowrap"
                 >
                   Tambah
                 </button>
               </form>
 
-              <div className="mb-10">
+              <div className="flex-1 overflow-y-auto mb-6 sm:mb-8 pr-2 min-h-[100px] sm:min-h-[150px]">
                 {groups.length > 0 ? (
-                  <div className="flex flex-wrap gap-3">
+                  <div className="flex flex-wrap gap-2 sm:gap-3">
                     <AnimatePresence>
                       {groups.map((group) => (
                         <motion.div
@@ -178,39 +178,39 @@ export default function App() {
                           initial={{ opacity: 0, scale: 0.8 }}
                           animate={{ opacity: 1, scale: 1 }}
                           exit={{ opacity: 0, scale: 0.8 }}
-                          className={`border rounded-full pl-5 pr-2 py-2 flex items-center gap-3 backdrop-blur-sm ${isDarkMode ? 'bg-slate-700/50 border-white/5' : 'bg-slate-100 border-slate-200'}`}
+                          className={`border rounded-full pl-3 sm:pl-5 pr-1 sm:pr-2 py-1.5 sm:py-2 flex items-center gap-2 sm:gap-3 backdrop-blur-sm ${isDarkMode ? 'bg-slate-700/50 border-white/5' : 'bg-slate-100 border-slate-200'}`}
                         >
-                          <span className={`font-semibold ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{group.name}</span>
+                          <span className={`font-semibold text-sm sm:text-base truncate max-w-[120px] sm:max-w-[200px] ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{group.name}</span>
                           <button
                             onClick={() => handleRemoveGroup(group.id)}
-                            className={`p-1.5 rounded-full transition-colors ${isDarkMode ? 'bg-slate-800/80 hover:bg-red-500/20 text-slate-400 hover:text-red-400' : 'bg-slate-200 hover:bg-red-200 text-slate-500 hover:text-red-500'}`}
+                            className={`p-1 sm:p-1.5 rounded-full transition-colors shrink-0 ${isDarkMode ? 'bg-slate-800/80 hover:bg-red-500/20 text-slate-400 hover:text-red-400' : 'bg-slate-200 hover:bg-red-200 text-slate-500 hover:text-red-500'}`}
                             title="Hapus"
                           >
-                            <X className="w-4 h-4" />
+                            <X className="w-3 h-3 sm:w-4 sm:h-4" />
                           </button>
                         </motion.div>
                       ))}
                     </AnimatePresence>
                   </div>
                 ) : (
-                  <div className={`text-center py-8 border-2 border-dashed rounded-2xl ${isDarkMode ? 'text-slate-500 border-white/5' : 'text-slate-400 border-slate-300'}`}>
+                  <div className={`h-full w-full flex items-center justify-center text-center py-8 border-2 border-dashed rounded-2xl ${isDarkMode ? 'text-slate-500 border-white/5' : 'text-slate-400 border-slate-300'}`}>
                     Belum ada grup yang ditambahkan.
                   </div>
                 )}
               </div>
 
-              <div className="flex justify-center">
+              <div className="shrink-0 flex justify-center">
                 <button
                   onClick={handleStartQuiz}
                   disabled={groups.length === 0}
-                  className={`group relative inline-flex items-center justify-center gap-3 px-10 py-5 rounded-full font-bold text-xl transition-all disabled:cursor-not-allowed active:scale-95 disabled:scale-100 ${
+                  className={`group relative inline-flex items-center justify-center gap-2 sm:gap-3 px-8 sm:px-10 py-3 sm:py-5 rounded-full font-bold text-lg sm:text-xl transition-all disabled:cursor-not-allowed active:scale-95 disabled:scale-100 ${
                     isDarkMode 
                       ? 'bg-white disabled:bg-slate-800 text-slate-900 disabled:text-slate-500 hover:bg-slate-100 shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:shadow-[0_0_60px_rgba(255,255,255,0.5)] disabled:shadow-none' 
                       : 'bg-slate-900 disabled:bg-slate-300 text-white disabled:text-slate-500 hover:bg-slate-800 shadow-[0_0_30px_rgba(0,0,0,0.2)] hover:shadow-[0_0_40px_rgba(0,0,0,0.3)] disabled:shadow-none'
                   }`}
                 >
                   <span>Mulai Kuis</span>
-                  <Play className="w-6 h-6 fill-current" />
+                  <Play className="w-5 h-5 sm:w-6 sm:h-6 fill-current" />
                 </button>
               </div>
             </motion.div>
