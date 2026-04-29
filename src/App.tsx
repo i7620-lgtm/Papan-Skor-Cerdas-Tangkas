@@ -51,6 +51,8 @@ export default function App() {
   const [isMuted, setIsMuted] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [recentlyChanged, setRecentlyChanged] = useState<{ id: string; type: 'plus' | 'minus' } | null>(null);
+  const [correctScore, setCorrectScore] = useState(10);
+  const [wrongScore, setWrongScore] = useState(10);
 
   const handleAddGroup = (e: React.FormEvent) => {
     e.preventDefault();
@@ -199,6 +201,35 @@ export default function App() {
                 )}
               </div>
 
+              <div className={`shrink-0 grid grid-cols-2 gap-4 mb-6 sm:mb-8`}>
+                <div className={`flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 sm:p-4 rounded-xl border ${isDarkMode ? 'bg-slate-900/30 border-white/5' : 'bg-slate-50 border-slate-200'}`}>
+                  <span className={`text-sm font-semibold mb-2 sm:mb-0 ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>Skor Benar</span>
+                  <div className="flex items-center">
+                    <Plus className="w-4 h-4 text-green-500 mr-1" />
+                    <input 
+                      type="number" 
+                      value={correctScore} 
+                      onChange={(e) => setCorrectScore(Math.max(1, Number(e.target.value)))} 
+                      className={`w-16 bg-transparent border-b text-center font-bold text-lg focus:outline-none focus:border-green-500 ${isDarkMode ? 'border-white/20 text-white' : 'border-slate-300 text-slate-900'}`} 
+                      min="1"
+                    />
+                  </div>
+                </div>
+                <div className={`flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 sm:p-4 rounded-xl border ${isDarkMode ? 'bg-slate-900/30 border-white/5' : 'bg-slate-50 border-slate-200'}`}>
+                  <span className={`text-sm font-semibold mb-2 sm:mb-0 ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>Skor Salah</span>
+                  <div className="flex items-center">
+                    <Minus className="w-4 h-4 text-red-500 mr-1" />
+                    <input 
+                      type="number" 
+                      value={wrongScore} 
+                      onChange={(e) => setWrongScore(Math.max(1, Number(e.target.value)))} 
+                      className={`w-16 bg-transparent border-b text-center font-bold text-lg focus:outline-none focus:border-red-500 ${isDarkMode ? 'border-white/20 text-white' : 'border-slate-300 text-slate-900'}`} 
+                      min="1"
+                    />
+                  </div>
+                </div>
+              </div>
+
               <div className="shrink-0 flex justify-center">
                 <button
                   onClick={handleStartQuiz}
@@ -271,7 +302,7 @@ export default function App() {
 
                         <div className="mt-auto grid grid-cols-2 gap-3">
                           <button
-                            onClick={() => updateScore(group.id, -10, 'minus')}
+                            onClick={() => updateScore(group.id, -wrongScore, 'minus')}
                             className={`py-4 sm:py-5 rounded-2xl flex items-center justify-center transition-all group active:scale-95 border ${
                               isDarkMode 
                                 ? 'bg-white/5 hover:bg-red-500/20 border-white/10 hover:border-red-500/50 text-slate-300 hover:text-red-400' 
@@ -281,7 +312,7 @@ export default function App() {
                             <Minus className="w-8 h-8 group-hover:scale-125 transition-transform" />
                           </button>
                           <button
-                            onClick={() => updateScore(group.id, 10, 'plus')}
+                            onClick={() => updateScore(group.id, correctScore, 'plus')}
                             className={`py-4 sm:py-5 rounded-2xl flex items-center justify-center transition-all group active:scale-95 border ${
                               isDarkMode 
                                 ? 'bg-white/5 hover:bg-green-500/20 border-white/10 hover:border-green-500/50 text-slate-300 hover:text-green-400' 
@@ -303,7 +334,7 @@ export default function App() {
                                 changeType === 'plus' ? 'text-green-500' : 'text-red-500'
                               }`}
                             >
-                              {changeType === 'plus' ? '+10' : '-10'}
+                              {changeType === 'plus' ? `+${correctScore}` : `-${wrongScore}`}
                             </motion.div>
                           )}
                         </AnimatePresence>
